@@ -94,6 +94,37 @@ h3 {
   
   .information-text {
     color: #ddd; }
+
+
+    /* AJAX*/
+    #informaciosdiv {
+      width: 1600px;
+    }
+    #tanosvenyinfo {
+      float: right;
+      border: 5px solid green;
+      /* width: 1000px;
+      height: 300px; */
+    }
+    .cimke{
+      display: inline-block;
+      width: 270px;
+      text-align: left;
+    }
+    span {
+      margin: 5px 6px;
+    }
+    label {
+      display: inline-block;
+      width: 300px;
+      text-align: left;
+    }
+    select {
+      width: 215px;
+    }
+
+
+    /* RESPONSIVE*/
   
   @media screen and (max-width: 320px) {
     .row {
