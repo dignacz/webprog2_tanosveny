@@ -53,12 +53,16 @@ foreach ($menu[0] as $id=>$i) {
     <!-- Collapsible wrapper -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <!-- Left links -->
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+      <li class="nav-item">
       <div class="mTitle"><?=$i["item_text"]?></div>
     <div class="mItems"><?php
       foreach ($menu[$id] as $cid=>$c) { draw($c); }
     ?></div>
   </div>
   </div>
+  </li>
+  </ul>
       <!-- Left links -->
 
       <?php
