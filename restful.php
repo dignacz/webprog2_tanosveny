@@ -67,16 +67,30 @@ curl_close($ch);
 ?>
 <div class="container">
   <div class="row">
-    <?= $result ?>
-    <h1>VIP túrázók:</h1>
-    <?= $tabla ?>
-    <br>
+
+  <?php
+if($userRole == 'admin' || $userRole == 'reguser'){
+    // admin and reguser can access all pages
+    $pageContent = $result .
+    '<h1>VIP túrázók:</h1>' .
+    $tabla .
+    '<br>
     <h2>Módosítás / Beszúrás</h2>
     <form method="post">
     Id: <input type="text" name="id"><br><br>
     Becenév: <input type="text" name="bn" maxlength="45"> Hobbi: <input type="text" name="ho" maxlength="45"><br><br>
     Hova utaznál: <input type="text" name="hu" maxlength="12"> Mit dolgozol: <input type="text" name="md"><br><br>
     <input type="submit" value = "Küldés">
-    </form>
+    </form>';
+
+  } else {
+    $pageContent = "<p>Nincs jogosultságod az oldal megtekintéséhez!</p>";
+} 
+
+echo $pageContent;
+
+ ?>  
     </div>
 </div>
+
+

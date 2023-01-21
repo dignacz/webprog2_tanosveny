@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Dec 02. 02:43
+-- Létrehozás ideje: 2023. Jan 21. 18:05
 -- Kiszolgáló verziója: 10.1.38-MariaDB
 -- PHP verzió: 5.6.40
 
@@ -34,7 +34,7 @@ CREATE TABLE `menu_items` (
   `item_text` varchar(255) NOT NULL,
   `item_link` varchar(255) NOT NULL,
   `item_target` varchar(255) DEFAULT NULL,
-  `jogosultsag` varchar(3) NOT NULL
+  `jogosultsag` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -42,11 +42,13 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`item_id`, `parent_id`, `item_text`, `item_link`, `item_target`, `jogosultsag`) VALUES
-(1, 0, 'Főoldal', 'index.php?page=home', NULL, '111'),
-(2, 0, 'Tanösvények-Ajax', 'index.php?page=tanosveny', NULL, '011'),
-(3, 0, 'VIP-Restful', 'index.php?page=restful', NULL, '011'),
-(4, 0, 'Grafikon', 'index.php?page=chart', NULL, '111'),
-(6, 0, 'Drum Kit JS', 'index.php?page=drumjs', NULL, '111');
+(1, 0, 'Főoldal', 'index.php?page=home', NULL, 'latogato'),
+(2, 0, 'Tanösvények-Ajax', 'index.php?page=tanosveny', NULL, 'reguser'),
+(3, 0, 'REST API', '', NULL, 'latogato'),
+(4, 0, 'Grafikon', 'index.php?page=chart', NULL, 'latogato'),
+(6, 0, 'Drum Kit JS', 'index.php?page=drumjs', NULL, 'admin'),
+(7, 3, 'WebAPI', 'index.php?page=restfulfree', NULL, 'latogato'),
+(8, 3, 'DatabaseAPI', 'index.php?page=restful', NULL, 'reguser');
 
 -- --------------------------------------------------------
 
@@ -239,8 +241,16 @@ CREATE TABLE `users` (
   `firstname` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
-  `jogosultsag` varchar(3) COLLATE utf8_hungarian_ci NOT NULL
+  `jogosultsag` varchar(20) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `lastname`, `firstname`, `email`, `password`, `jogosultsag`) VALUES
+(4, 'lumilla92', 'Ignácz', 'Bernadett', 'lumilla92@gmail.com', '822ffd101cf382bba099158abdba2b85', 'admin'),
+(5, 'testuser', 'Doe', 'Jane', 'test@test.hu', 'e10adc3949ba59abbe56e057f20f883e', 'reguser');
 
 -- --------------------------------------------------------
 
@@ -459,13 +469,13 @@ ALTER TABLE `ut`
 -- AUTO_INCREMENT a táblához `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `item_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `item_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Megkötések a kiírt táblákhoz

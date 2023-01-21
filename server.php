@@ -10,7 +10,7 @@ $email    = "";
 $errors = array(); 
 
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'webprog2_cukraszda');
+$db = mysqli_connect('localhost', 'root', '', 'webprog2_tanosveny');
 if(!$db){
   die("Error: Failed to connect to database!");
 }
@@ -57,8 +57,8 @@ if (isset($_POST['reg_user'])) {
   if (count($errors) == 0) {
   	$password = md5($password_1);//encrypt the password before saving in the database
 
-  	$query = "INSERT INTO users (username, lastname, firstname, email, password) 
-  			  VALUES('$username', '$lastname', '$firstname', '$email', '$password')";
+  	$query = "INSERT INTO users (username, lastname, firstname, email, password, jogosultsag) 
+  			  VALUES('$username', '$lastname', '$firstname', '$email', '$password', 'reguser')";
   	mysqli_query($db, $query);
   	/*$_SESSION['username'] = $username;
   	$_SESSION['success'] = "You are now logged in";*/
@@ -86,6 +86,8 @@ if (isset($_POST['login_user'])) {
         $results = mysqli_query($db, $query);
         if (mysqli_num_rows($results) == 1) {
           $_SESSION['username'] = $username;
+          $row = mysqli_fetch_array($results,MYSQLI_ASSOC);
+          $_SESSION['jogosultsag'] = $row['jogosultsag'];
           $_SESSION['success'] = "Sikeres bejelentkezés!";
           header('location: index.php');
         }else {

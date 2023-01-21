@@ -18,85 +18,78 @@ session_start();
   <script type="text/javascript" src = "js/ajax.js"></script>
 </head>
 <body>
+
 <!-- Navbar -->
 <nav class="menu navbar navbar-expand-lg navbar-light bg-light">
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
-      <img
+    <img
         src="images/header.png"
         height="60"
         alt="tanosveny"
         loading="lazy"
         style="margin-top: -1px;"
-      />
+    />
     <!-- Toggle button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <?php
-// (A) SUPPORT FUNCTION TO DRAW AN <A>
-function draw ($i) {
-  printf("<a %shref='%s'>%s</a>",
-    $i["item_target"]!="" ? "target='". $i["item_target"] ."' " : "" ,
-    $i["item_link"], $i["item_text"]
-  );
-}
-
-// (B) DRAW MENU ITEMS
-require "menu.php";
-foreach ($menu[0] as $id=>$i) {
-  // (B1) WITH SUB-ITEMS
-  if (isset($menu[$id])) { ?>
-
+    </button>
     <!-- Collapsible wrapper -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <!-- Left links -->
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-      <li class="nav-item">
-      <div class="mTitle"><?=$i["item_text"]?></div>
-    <div class="mItems"><?php
-      foreach ($menu[$id] as $cid=>$c) { draw($c); }
-    ?></div>
-  </div>
-  </div>
-  </li>
-  </ul>
-      <!-- Left links -->
-
-      <?php
-  // (B2) SINGLE MENU ITEM
-  } else { draw($i); }
-}
-?>
-
+        <?php
+        // (B) DRAW MENU ITEMS
+        require "menu.php";
+        foreach ($menu[0] as $id=>$i) {
+        // (B1) WITH SUB-ITEMS
+        if (isset($menu[$id]['submenu'])) { ?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-<?=$id?>" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <?=$i["item_text"]?>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown-<?=$id?>">
+            <?php
+            foreach ($menu[$id]['submenu'] as $cid=>$c) {
+                echo "<a class='dropdown-item' href='" . $c["item_link"] . "'>" . $c["item_text"] . "</a>";
+            }
+            ?>
+            </div>
+          </li>
+        <?php
+        // (B2) SINGLE MENU ITEM
+        } else { 
+            echo "<li class='nav-item'><a class='nav-link' href='" . $i["item_link"] . "'>" . $i["item_text"] . "</a></li>";
+        }
+        }
+        ?>
+      </ul>
       <span class="navbar-text">
-      <?php
-      
-      if (isset($_SESSION['username'])) {
-        $myConnection= mysqli_connect('localhost', 'root', '', 'webprog2_tanosveny') or die ("could not connect to mysql");
-        mysqli_set_charset($myConnection,'utf8'); 
-        $sqlCommand="SELECT * FROM `users` WHERE `username` = '{$_SESSION['username']}'";
-        $query=mysqli_query($myConnection, $sqlCommand) or die(mysqli_error($myConnection));
-        $show=mysqli_fetch_assoc($query);
-        echo "Bejelentkezett: ".$show['lastname']; echo " " .$show['firstname'];
-        //mysql_close(); 
-      }   
-      ?>
+        <?php
+        if (isset($_SESSION['username'])) {
+            $myConnection= mysqli_connect('localhost', 'root', '', 'webprog2_tanosveny') or die ("could not connect to mysql");
+            mysqli_set_charset($myConnection,'utf8'); 
+            $sqlCommand="SELECT * FROM `users` WHERE `username` = '{$_SESSION['username']}'";
+            $query=mysqli_query($myConnection, $sqlCommand) or die(mysqli_error($myConnection));
+            $show=mysqli_fetch_assoc($query);
+            echo "Bejelentkezett: ".$show['lastname']." ".$show['firstname'];
+        }   
+        ?>
       </span>
-
       <div class="d-flex align-items-center">
         <?php if (isset($_SESSION['username'])) : ?>
           <a href="index.php?page=logout">
-        <button type="button" class="btn btn-outline-success" >
-          Kijelentkezés</button>
-        </a>
+            <button type="button" class="btn btn-outline-success" >
+              Kijelentkezés
+            </button>
+          </a>
         <?php else : ?>
           <a href="index.php?page=login">
-        <button type="button" class="btn btn-outline-success" >
-          Bejelentkezés</button>
-        </a>
+            <button type="button" class="btn btn-outline-success" >
+              Bejelentkezés
+            </button>
+          </a>
         <?php endif; ?>
       </div>
     </div>
@@ -105,6 +98,9 @@ foreach ($menu[0] as $id=>$i) {
   <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
+
+
+
 
 
       <article>

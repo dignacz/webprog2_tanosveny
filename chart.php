@@ -10,7 +10,7 @@ try {
 }
 
 
-/* function utf8ize($d) {
+function utf8ize($d) {
     if (is_array($d)) {
         foreach ($d as $k => $v) {
             $d[$k] = utf8ize($v);
@@ -19,7 +19,7 @@ try {
         return utf8_encode($d);
     }
     return $d;
-} */
+} 
 
 // Attempt select query execution
 try{
@@ -31,7 +31,7 @@ try{
 
       while($row = $result->fetch()) {
         $mennyiseg[]=$row["mennyiseg"];
-        $npnev[]=$row["npnev"];
+        $npnev[]=utf8ize($row["npnev"]);
       }
   
     unset($result);
@@ -42,8 +42,8 @@ try{
     die("ERROR: Could not able to execute $sql. " . $e->getMessage());
   }
 
- /* echo print_r(json_encode($mennyiseg));
-  echo print_r(json_encode($npnev)); */
+ //echo print_r(json_encode($mennyiseg));
+//echo print_r(json_encode($npnev));
    
   // Close connection
   unset($pdo);
@@ -92,8 +92,8 @@ try{
     <script>
     
     // setup 
-    const mennyiseg = <?php echo json_encode($mennyiseg); ?>
-    const npnev = <?php echo json_encode($npnev); ?>
+    const mennyiseg = <?php echo json_encode($mennyiseg); ?>;
+    const npnev = <?php echo json_encode($npnev); ?>;
     const data = {
       labels: npnev,
       datasets: [{
@@ -140,5 +140,6 @@ try{
       config
     );
     </script>
+
   </div>
 </div>

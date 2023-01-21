@@ -84,4 +84,9 @@ $(document).ready(function() {
     }, function() {
         $(this).css({"color" : "black", "background-color" : "white"});
     });
+
+    
 });
+
+
+
