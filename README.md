@@ -1,2 +1,2 @@
-# webprog2_tanosveny
+http://magyartanosveny.42web.io/
  
